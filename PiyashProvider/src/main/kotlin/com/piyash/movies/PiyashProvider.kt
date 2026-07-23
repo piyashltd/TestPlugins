@@ -1,0 +1,62 @@
+package com.piyash.movies
+
+import com.lagradost.cloudstream3.*
+import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.Qualities
+import android.content.Context
+import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
+import com.lagradost.cloudstream3.plugins.Plugin
+
+@CloudstreamPlugin
+class PiyashPlugin: Plugin() {
+    override fun load(context: Context) {
+        registerMainAPI(PiyashProvider())
+    }
+}
+
+class PiyashProvider : MainAPI() {
+    override var mainUrl = "https://github.com/piyashltd"
+    override var name = "Piyash Collection"
+    override val hasMainPage = true
+    override var lang = "bn"
+    override val supportedTypes = setOf(TvType.Movie, TvType.TvSeries)
+
+    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
+        val movies = listOf(
+            newMovieSearchResponse(
+                "Piyash Demo Stream", 
+                "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8", 
+                TvType.Movie
+            ) {
+                this.posterUrl = "https://picsum.photos/400/600"
+            }
+        )
+        return newHomePageResponse(listOf(HomePageList("My Favorites", movies)))
+    }
+
+    override suspend fun load(url: String): LoadResponse {
+        return newMovieLoadResponse("Piyash Demo Stream", url, TvType.Movie, url) {
+            this.posterUrl = "https://picsum.photos/400/600"
+            this.plot = "ডেমো স্পয়লার। আপনার নিজস্ব m3u8 লিংক ঠিকমতো কাজ করছে।"
+        }
+    }
+
+    override suspend fun loadLinks(
+        data: String,
+        isCasting: Boolean,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ): Boolean {
+        callback.invoke(
+            ExtractorLink(
+                source = this.name,
+                name = "Direct M3U8 Stream",
+                url = data,
+                referer = "",
+                quality = Qualities.Unknown.value,
+                isM3u8 = true
+            )
+        )
+        return true
+    }
+}

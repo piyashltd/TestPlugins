@@ -1,0 +1,16 @@
+[
+    {
+        "fileHash": "sha256-9b4c208208ad1e15af4053330f6ace7af96b9f57c1d0d5b3624f6904164fe3fc",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/piyashltd/TestPlugins",
+        "fileSize": 4766,
+        "status": 3,
+        "authors": [
+            
+        ],
+        "version": -1,
+        "internalName": "PiyashProvider",
+        "url": "https://raw.githubusercontent.com/piyashltd/TestPlugins/builds/PiyashProvider.cs3",
+        "name": "PiyashProvider"
+    }
+]
