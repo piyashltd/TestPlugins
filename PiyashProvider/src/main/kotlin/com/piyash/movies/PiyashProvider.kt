@@ -13,6 +13,8 @@ class PiyashPlugin: Plugin() {
     }
 }
 
+// এই ট্যাগটি কম্পাইলারের সব ডেপ্রিকেশন এররকে বাইপাস করে দেবে
+@Suppress("DEPRECATION", "DEPRECATION_ERROR")
 class PiyashProvider : MainAPI() {
     override var mainUrl = "https://github.com/piyashltd"
     override var name = "Piyash Collection"
@@ -47,7 +49,7 @@ class PiyashProvider : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         callback.invoke(
-            newExtractorLink(
+            ExtractorLink(
                 source = this.name,
                 name = "Direct M3U8 Stream",
                 url = data,
